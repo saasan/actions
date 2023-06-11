@@ -27,6 +27,7 @@ jobs:
 
       - name: 初回ならキャッシュファイルを初期化
         run: |
+          pwd
           if [ ! -f ${{ env.STATE_FILE }} ]; then
             echo '0' > ${{ env.STATE_FILE }}
           fi
