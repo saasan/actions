@@ -15,7 +15,7 @@ jobs:
   exec:
     runs-on: ubuntu-latest
     steps:
-      - name: keyの生成
+      - name: actions/cache用keyの生成
         run: echo "APPSTATE_KEY=$(date +%s)" >> "$GITHUB_ENV"
 
       - uses: actions/cache@v3
@@ -25,9 +25,11 @@ jobs:
           key: appstate-${{ env.APPSTATE_KEY }} # 毎回、最新のキャッシュを保存するためにIDを指定する
           restore-keys: appstate- # 復元時は最新のキャッシュを指定する
 
-      - run: echo '${{ toJSON(steps.appstate.outputs) }}'
-      - if: ${{ steps.appstate.outputs.cache-hit != 'true' }}
-        run: echo '0' > ${{ env.STATE_FILE }}
+      - name: 初回ならキャッシュファイルを初期化
+        run: |
+          if [ ! -f ${{ env.STATE_FILE }} ]; then
+            echo '0' > ${{ env.STATE_FILE }}
+          fi
       - run: cat ${{ env.STATE_FILE }}
 
       - uses: actions/checkout@v3

@@ -30,8 +30,14 @@ def main():
     logger.info('twitter_api_secret_key: ' + settings.twitter_api_secret_key)
     logger.info('tweeted_filename: ' + settings.tweeted_filename)
 
-    with open(settings.tweeted_filename, mode='w', encoding='utf-8', newline='\n') as f:
-        f.write(str(int(time.time())) + '\n')
+    with open(settings.tweeted_filename) as f:
+        logger.info('appstate: ' + f.read())
+
+    unixtime = str(int(time.time()))
+    logger.info('new appstate: ' + unixtime)
+
+    with open(settings.tweeted_filename, mode='w') as f:
+        f.write(unixtime)
 
 
 if __name__ == '__main__':
