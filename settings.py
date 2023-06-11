@@ -9,9 +9,9 @@ class Settings(BaseSettings):
     # Twitter API Secret Key
     twitter_api_secret_key: str
     # Twitter Access Token
-    twitter_access_token: str
+    # twitter_access_token: str
     # Twitter Access Token Secret
-    twitter_access_token_secret: str
+    # twitter_access_token_secret: str
 
     # ツイート済みエントリーの日時を書き込むファイル名
     tweeted_filename: str = 'appstate'
