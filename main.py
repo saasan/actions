@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from settings import settings
 
@@ -30,7 +31,10 @@ def main():
     logger.info('twitter_api_secret_key: ' + settings.twitter_api_secret_key)
     logger.info('tweeted_filename: ' + settings.tweeted_filename)
 
-    with open(settings.tweeted_filename) as f:
+    dir = os.path.dirname(os.path.abspath(__file__))
+    logger.info('dir: ' + dir)
+
+    with open(os.path.join(dir, settings.tweeted_filename)) as f:
         logger.info('appstate: ' + f.read())
 
     unixtime = str(int(time.time()))
