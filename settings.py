@@ -14,7 +14,7 @@ class Settings(BaseSettings):
     # twitter_access_token_secret: str
 
     # ツイート済みエントリーの日時を書き込むファイル名
-    tweeted_filename: str = 'appstate'
+    tweeted_filename: str = './appstate'
     # ツイート済みエントリーの日時が保存されていない場合にツイートする最大数
     untweeted_max_num: int = 3
     # URLを除いたツイートの最大文字数
