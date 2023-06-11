@@ -1,8 +1,8 @@
 name: Python application
 
 on:
-  # schedule:
-  #   - cron: '3-59/10 * * * *'
+  schedule:
+    - cron: '3-59/10 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -15,6 +15,8 @@ jobs:
   exec:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: actions/cache用keyの生成
         run: echo "APPSTATE_KEY=$(date +%s)" >> "$GITHUB_ENV"
 
@@ -25,9 +27,8 @@ jobs:
           key: appstate-${{ env.APPSTATE_KEY }} # 毎回、最新のキャッシュを保存するためにIDを指定する
           restore-keys: appstate- # 復元時は最新のキャッシュを指定する
 
-      - name: 初回ならキャッシュファイルを初期化
+      - name: 初回ならファイルを初期化
         run: |
-          pwd
           if [ ! -f ${{ env.STATE_FILE }} ]; then
             echo '0' > ${{ env.STATE_FILE }}
           fi
