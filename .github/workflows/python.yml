@@ -15,15 +15,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: IDの生成
-        id: build-id
-        run: echo "::set-output name=id::$(date +%s)"
+      - name: keyの生成
+        run: echo "APPSTATE_KEY=$(date +%s)" >> "$GITHUB_ENV"
 
       - uses: actions/cache@v3
         id: appstate
         with:
           path: ${{ env.STATE_FILE }}
-          key: appstate-${{ steps.build-id.outputs.id }} # 毎回、最新のキャッシュを保存するためにIDを指定する
+          key: appstate-${{ env.APPSTATE_KEY }} # 毎回、最新のキャッシュを保存するためにIDを指定する
           restore-keys: appstate- # 復元時は最新のキャッシュを指定する
 
       - run: echo '${{ toJSON(steps.appstate.outputs) }}'
