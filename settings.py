@@ -19,6 +19,8 @@ class Settings(BaseSettings):
     untweeted_max_num: int = 3
     # URLを除いたツイートの最大文字数
     max_tweet_char: int = 128
+    # ログ出力の設定ファイル
+    logging_config_file: str = 'logging_config.json'
 
 
 settings = Settings()
