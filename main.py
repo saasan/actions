@@ -27,8 +27,11 @@ def main():
     # ログ出力の設定
     logger = setup_logger(__name__)
 
-    with open(settings.tweeted_file) as f:
-        logger.info('tweeted: ' + f.read())
+    try:
+        with open(settings.tweeted_file, 'r') as f:
+            logger.info('old tweeted: ' + f.read())
+    except FileNotFoundError:
+        logger.info('old tweeted: File Not Found')
 
     unixtime = str(int(time.time()))
     logger.info('new tweeted: ' + unixtime)

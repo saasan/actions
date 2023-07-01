@@ -27,13 +27,6 @@ jobs:
           key: tweeted-${{ env.TWEETED_KEY }} # 毎回、最新のキャッシュを保存するためにIDを指定する
           restore-keys: tweeted- # 復元時は最新のキャッシュを指定する
 
-      - name: 初回ならファイルを初期化
-        run: |
-          if [ ! -f ${{ env.STATE_FILE }} ]; then
-            echo '0' > ${{ env.STATE_FILE }}
-          fi
-      - run: cat ${{ env.STATE_FILE }}
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
