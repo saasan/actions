@@ -9,7 +9,6 @@ permissions:
   contents: read
 
 env:
-  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   STATE_FILE: './tweeted'
 
 jobs:
@@ -47,3 +46,7 @@ jobs:
           gh extension install actions/gh-actions-cache
           printenv
           gh actions-cache list -R "${REPO}" -B "${BRANCH}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          BRANCH: ${{ github.ref }}
