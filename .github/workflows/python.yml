@@ -44,8 +44,12 @@ jobs:
       - name: Cleanup
         run: |
           gh extension install actions/gh-actions-cache
-          printenv
-          gh actions-cache list -R "${REPO}" -B "${BRANCH}"
+          gh actions-cache list -R "${REPO}" -B "${BRANCH}" --key 'tweeted-' --order asc --sort created-at | grep -P 'days? ago'
+          while read KEY
+          do
+              echo "Deleting ${KEY}"
+              echo gh actions-cache delete "${KEY}" --confirm
+          done <<< $(gh actions-cache list -R "${REPO}" -B "${BRANCH}" --key 'tweeted-' --order asc --sort created-at | grep -P 'days? ago' | cut -f 1)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
