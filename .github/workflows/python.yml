@@ -9,6 +9,7 @@ permissions:
   contents: read
 
 env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   STATE_FILE: './tweeted'
 
 jobs:
