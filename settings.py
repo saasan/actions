@@ -2,25 +2,14 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    # RSSフィードのURL
-    feed_url: str
-    # Twitter API Key
-    twitter_api_key: str
-    # Twitter API Secret Key
-    twitter_api_secret_key: str
-    # Twitter Access Token
-    # twitter_access_token: str
-    # Twitter Access Token Secret
-    # twitter_access_token_secret: str
-
-    # ツイート済みエントリーの日時を書き込むファイル名
-    tweeted_filename: str = 'appstate'
-    # ツイート済みエントリーの日時が保存されていない場合にツイートする最大数
-    untweeted_max_num: int = 3
-    # URLを除いたツイートの最大文字数
-    max_tweet_char: int = 128
+    # ツイート済み日時を書き込むファイル名
+    tweeted_file: str = 'tweeted'
     # ログ出力の設定ファイル
     logging_config_file: str = 'logging_config.json'
+
+    class Config:
+        env_file = '.env'
+        env_file_encoding = 'utf-8'
 
 
 settings = Settings()

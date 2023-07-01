@@ -1,3 +1,2 @@
-feedparser
 pydantic
-tweepy
+pydantic[dotenv]

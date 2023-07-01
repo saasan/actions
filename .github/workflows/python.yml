@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  STATE_FILE: './appstate'
+  STATE_FILE: './tweeted'
 
 jobs:
   exec:
@@ -18,14 +18,14 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: actions/cache用keyの生成
-        run: echo "APPSTATE_KEY=$(date +%s)" >> "$GITHUB_ENV"
+        run: echo "TWEETED_KEY=$(date +%s)" >> "$GITHUB_ENV"
 
       - uses: actions/cache@v3
-        id: appstate
+        id: tweeted
         with:
           path: ${{ env.STATE_FILE }}
-          key: appstate-${{ env.APPSTATE_KEY }} # 毎回、最新のキャッシュを保存するためにIDを指定する
-          restore-keys: appstate- # 復元時は最新のキャッシュを指定する
+          key: tweeted-${{ env.TWEETED_KEY }} # 毎回、最新のキャッシュを保存するためにIDを指定する
+          restore-keys: tweeted- # 復元時は最新のキャッシュを指定する
 
       - name: 初回ならファイルを初期化
         run: |
@@ -43,13 +43,13 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # pip install feedparser pydantic tweepy
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       - name: Exce App
-        env:
-          FEED_URL: ${{ vars.FEED_URL }}
-          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
-          TWITTER_API_SECRET_KEY: ${{ secrets.TWITTER_API_SECRET_KEY }}
+        run: python main.py
+
+      - name: Cleanup
         run: |
-          python main.py
+          gh extension install actions/gh-actions-cache
+          printenv
+          gh actions-cache list -R "${REPO}" -B "${BRANCH}"
