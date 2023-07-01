@@ -44,7 +44,10 @@ jobs:
       - name: Cleanup
         run: |
           gh extension install actions/gh-actions-cache
-          gh actions-cache list -R "${REPO}" -B "${BRANCH}" --key 'tweeted-' --order asc --sort created-at | grep -P 'days? ago'
+
+          # キャッシュがない場合にエラーとなって停止するのを防ぐ
+          set +e
+
           while read KEY
           do
               echo "Deleting ${KEY}"
