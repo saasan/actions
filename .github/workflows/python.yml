@@ -40,7 +40,7 @@ jobs:
 
       - name: Exce App
         env:
-          UNTWEETED_MAX_NUM: ${{ vars.UNTWEETED_MAX_NUM }}
+          UNTWEETED_MAX_NUM: ${{ vars.UNTWEETED_MAX_NUM || '3' }}
         run: python main.py
 
       - name: Cleanup

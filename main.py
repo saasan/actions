@@ -27,6 +27,8 @@ def main():
     # ログ出力の設定
     logger = setup_logger(__name__)
 
+    logger.info('untweeted_max_num: ' + str(settings.untweeted_max_num))
+
     try:
         with open(settings.tweeted_file, 'r') as f:
             logger.info('old tweeted: ' + f.read())
